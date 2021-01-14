@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-
+# rubocop:disable Metrics/BlockNesting
 instructions = "1.The game is played on a 3x3 grid.\n
 2. One player is X, the other is O.\n
 3. Player take turns to input a no. between (1-9) to mark one of the empty squares.\n
@@ -9,17 +9,30 @@ instructions = "1.The game is played on a 3x3 grid.\n
 # p1_sym = ''
 # p1_move = ''
 # p2_move = ''
-# game_ctr=0
+game_ctr = 0
+win = 0
 # winner=0
 puts "xoxoxoxoxoxo Welcome to the Game of Tic-Tact-Toe  xoxoxoxoxoxo\n\n"
 puts "               Game Instructions\n\n"
 puts instructions + "\n\n"
-
+puts "\n3x3 Grid\n"
 (1..9).each do |i|
   print " #{i} "
   print '|' unless (i % 3).zero?
   puts "\n" if (i % 3).zero?
 end
+puts "\nWhat the grid may look like when there is a winner\n"
+(1..9).each do |i|
+  print ' X ' if i <= 3
+  print " #{i} " if i > 3
+  print '|' unless (i % 3).zero?
+  puts "\n" if (i % 3).zero?
+end
+puts "\nWhat the grid may look like when there is a draw\n"
+
+print "  X  O  X\n"
+print "  O  X  O\n"
+print "  O  X  O\n"
 
 print "\nWant to play the game (y/n)? = "
 want_to_play = gets.chomp.capitalize
@@ -31,44 +44,65 @@ while want_to_play == 'Y'
     print "\nPlayer 1 choose your symbol (O / X) = "
     p1_sym = gets.chomp.capitalize
     flag = 1 if %w[O X].include?(p1_sym)
-
+    puts "\nInvalid symbol. Choose again\n" if flag.zero?
   end
 
   p2_sym = p1_sym == 'X' ? 'O' : 'X'
   puts "\nPlayer 2 your symbol is = " + p2_sym
 
-  # while game_ctr<9 && win==0
-  flag = 0
-  while flag.zero?
-    print "\nPlayer 1 make your move = "
-    p1_move = gets.chomp
-    flag = 1 if [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(p1_move.to_i)
-    #  CHeck if chosen move is empty
-    #  if empty set flag=1
-    #  else flag =0
+  while game_ctr < 3 && win.zero?
+
+    flag = 0
+    while flag.zero?
+      print "\nPlayer 1 make your move = "
+      p1_move = gets.chomp
+      flag = 1 if [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(p1_move.to_i)
+      puts "\nThat was an Invalid Move. Input move again\n" if flag.zero?
+      #  CHeck if chosen move is empty
+      #  if empty set flag=1 puts "Invalid move"
+      #  else flag =0
+    end
+
+    (1..9).each do |i|
+      if i == p1_move.to_i
+        print ' X '
+      else
+        print " #{i} "
+      end
+      print '|' unless (i % 3).zero?
+      puts "\n" if (i % 3).zero?
+    end
+    # check if player1 has made a winnign move
+    # if winning move set win=1 and winner=1
+    # else win=0
+
+    # execute following loop only if win==0
+
+    flag = 0
+    while flag.zero?
+      print "\nPlayer 2 make your move = "
+      p2_move = gets.chomp
+      flag = 1 if [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(p2_move.to_i)
+      puts "\nThat was an Invalid Move. Input move again\n" if flag.zero?
+
+      #  CHeck if chosen move is empty
+      #  if empty set flag=1
+      #  else flag =0
+    end
+    (1..9).each do |i|
+      if i == p2_move.to_i
+        print ' O '
+      else
+        print " #{i} "
+      end
+      print '|' unless (i % 3).zero?
+      puts "\n" if (i % 3).zero?
+    end
+    # check if player2 has made a winnign move
+    # if winning move set win=1 and winner=2
+    # else win=0
+    game_ctr += 1
   end
-
-  # check if player1 has made a winnign move
-  # if winning move set win=1 and winner=1
-  # else win=0
-
-  # execute following loop only if win==0
-
-  flag = 0
-  while flag.zero?
-    print "\nPlayer 2 make your move = "
-    p2_move = gets.chomp
-    flag = 1 if [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(p2_move.to_i)
-    #  CHeck if chosen move is empty
-    #  if empty set flag=1
-    #  else flag =0
-  end
-
-  # check if player2 has made a winnign move
-  # if winning move set win=1 and winner=2
-  # else win=0
-  # game_ctr = game_ctr+1
-  # end
   print "\nWant to play again (y/n)? = "
   want_to_play = gets.chomp.capitalize
 
@@ -83,3 +117,5 @@ end
 # end
 
 puts "\n \nThank you for playing the Game"
+
+# rubocop:enable Metrics/BlockNesting
