@@ -10,6 +10,7 @@ p1_sym = ''
 # p1_move = ''
 # p2_move = ''
 # game_ctr=0
+# winner=0
 puts "xoxoxoxoxoxo Welcome to the Game of Tic-Tact-Toe  xoxoxoxoxoxo\n\n"
 puts "               Game Instructions\n\n"
 puts instructions + "\n\n"
@@ -48,7 +49,7 @@ while want_to_play == 'Y'
   end
 
   # check if player1 has made a winnign move
-  # if winning move set win=1
+  # if winning move set win=1 and winner=1
   # else win=0
 
   # execute following loop only if win==0
@@ -64,7 +65,7 @@ while want_to_play == 'Y'
   end
 
   # check if player2 has made a winnign move
-  # if winning move set win=1
+  # if winning move set win=1 and winner=2
   # else win=0
   # game_ctr = game_ctr+1
   # end
@@ -72,5 +73,13 @@ while want_to_play == 'Y'
   want_to_play = gets.chomp.capitalize
 
 end
+
+# if winner==1
+#   puts "Congratulations Player 1 "
+# elsif winner==2
+#   puts "Congratulations Player 2 "
+# elsif winner==0
+#   puts "its a draw"
+# end
 
 puts "\n \nThank you for playing the Game"
