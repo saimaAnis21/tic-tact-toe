@@ -1,13 +1,15 @@
 #!/usr/bin/env ruby
-# declaring variables
+
 instructions = "1.The game is played on a 3x3 grid.\n
 2. One player is X, the other is O.\n
 3. Player take turns to input a no. between (1-9) to mark one of the empty squares.\n
 4. The first player to get 3 marks in a row (up, down, across, or diagonally) is the winner.\n
 5. If none of the players win and all 9 squares are filled the game is a draw"
-# want_to_play = 'y'
 
-# Intro to the game
+p1_sym = ''
+# p1_move = ''
+# p2_move = ''
+# game_ctr=0
 puts "xoxoxoxoxoxo Welcome to the Game of Tic-Tact-Toe  xoxoxoxoxoxo\n\n"
 puts "               Game Instructions\n\n"
 puts instructions + "\n\n"
@@ -18,8 +20,57 @@ puts instructions + "\n\n"
   puts "\n" if (i % 3).zero?
 end
 
-# puts "Want to play again (y/n) ?="
+print "\nWant to play the game (y/n)? = "
+want_to_play = gets.chomp.capitalize
 
-# while(want_to_play=='y')
+while want_to_play == 'Y'
 
-# end
+  flag = 0
+  while flag.zero?
+    print "\nPlayer 1 choose your symbol (O / X) = "
+    p1_sym = gets.chomp.capitalize
+    flag = 1 if %w[O X].include?(p1_sym)
+
+  end
+
+  p2_sym = p1_sym == 'X' ? 'O' : 'X'
+  puts "\nPlayer 2 your symbol is = " + p2_sym
+
+  # while game_ctr<9 && win==0
+  flag = 0
+  while flag.zero?
+    print "\nPlayer 1 make your move = "
+    p1_move = gets.chomp
+    flag = 1 if [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(p1_move.to_i)
+    #  CHeck if chosen move is empty
+    #  if empty set flag=1
+    #  else flag =0
+  end
+
+  # check if player1 has made a winnign move
+  # if winning move set win=1
+  # else win=0
+
+  # execute following loop only if win==0
+
+  flag = 0
+  while flag.zero?
+    print "\nPlayer 2 make your move = "
+    p2_move = gets.chomp
+    flag = 1 if [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(p2_move.to_i)
+    #  CHeck if chosen move is empty
+    #  if empty set flag=1
+    #  else flag =0
+  end
+
+  # check if player2 has made a winnign move
+  # if winning move set win=1
+  # else win=0
+  # game_ctr = game_ctr+1
+  # end
+  print "\nWant to play again (y/n)? = "
+  want_to_play = gets.chomp.capitalize
+
+end
+
+puts "\n \nThank you for playing the Game"
