@@ -6,7 +6,7 @@ instructions = "1.The game is played on a 3x3 grid.\n
 4. The first player to get 3 marks in a row (up, down, across, or diagonally) is the winner.\n
 5. If none of the players win and all 9 squares are filled the game is a draw"
 
-p1_sym = ''
+# p1_sym = ''
 # p1_move = ''
 # p2_move = ''
 # game_ctr=0
