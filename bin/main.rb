@@ -1,2 +1,2 @@
 #!/usr/bin/env ruby
-puts 'Hello World to Saimaaa'
+puts 'Hello World to Saimaa'
