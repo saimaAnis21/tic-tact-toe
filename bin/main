@@ -1,2 +1,25 @@
 #!/usr/bin/env ruby
-puts 'Hello World!!!'
+# declaring variables
+instructions = "1.The game is played on a 3x3 grid.\n
+2. One player is X, the other is O.\n
+3. Player take turns to input a no. between (1-9) to mark one of the empty squares.\n
+4. The first player to get 3 marks in a row (up, down, across, or diagonally) is the winner.\n
+5. If none of the players win and all 9 squares are filled the game is a draw"
+# want_to_play = 'y'
+
+# Intro to the game
+puts "xoxoxoxoxoxo Welcome to the Game of Tic-Tact-Toe  xoxoxoxoxoxo\n\n"
+puts "               Game Instructions\n\n"
+puts instructions + "\n\n"
+
+(1..9).each do |i|
+  print " #{i} "
+  print '|' unless (i % 3).zero?
+  puts "\n" if (i % 3).zero?
+end
+
+# puts "Want to play again (y/n) ?="
+
+# while(want_to_play=='y')
+
+# end
