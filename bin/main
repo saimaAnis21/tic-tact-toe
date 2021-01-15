@@ -9,8 +9,8 @@ instructions = "1.The game is played on a 3x3 grid.\n
 # p1_sym = ''
 # p1_move = ''
 # p2_move = ''
-p1_arr= Array.new
-p2_arr= Array.new
+p1_arr = []
+p2_arr = []
 game_ctr = 0
 win = 0
 # winner=0
@@ -52,7 +52,7 @@ while want_to_play == 'Y'
   p2_sym = p1_sym == 'X' ? 'O' : 'X'
   puts "\nPlayer 2 your symbol is = " + p2_sym
 
-  while game_ctr < 3 && win.zero?
+  while game_ctr < 9 && win.zero?
 
     flag = 0
     while flag.zero?
@@ -65,7 +65,7 @@ while want_to_play == 'Y'
           puts "\nThat move is not available\n"
         end
       else
-      puts "\nThat was an Invalid Move. Input move again\n"
+        puts "\nThat was an Invalid Move. Input move again\n"
       end
     end
 
@@ -82,8 +82,14 @@ while want_to_play == 'Y'
       print '|' unless (i % 3).zero?
       puts "\n" if (i % 3).zero?
     end
+
+    if game_ctr == 4
+      puts 'The game is a draw and no one wins'
+      break
+    end
     # check if player1 has made a winnign move
     # if winning move set win=1 and winner=1
+    # puts "That was a winning move. COngratulations"
     # else win=0
 
     # execute following loop only if win==0
@@ -99,7 +105,7 @@ while want_to_play == 'Y'
           puts "\nThat move is not available\n"
         end
       else
-      puts "\nThat was an Invalid Move. Input move again\n"
+        puts "\nThat was an Invalid Move. Input move again\n"
       end
     end
 
@@ -118,8 +124,10 @@ while want_to_play == 'Y'
     end
     # check if player2 has made a winnign move
     # if winning move set win=1 and winner=2
+    # puts "That was a winning move. COngratulations"
     # else win=0
     game_ctr += 1
+
   end
   print "\nWant to play again (y/n)? = "
   want_to_play = gets.chomp.capitalize
