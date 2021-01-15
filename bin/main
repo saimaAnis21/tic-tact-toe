@@ -9,6 +9,8 @@ instructions = "1.The game is played on a 3x3 grid.\n
 # p1_sym = ''
 # p1_move = ''
 # p2_move = ''
+p1_arr= Array.new
+p2_arr= Array.new
 game_ctr = 0
 win = 0
 # winner=0
@@ -56,16 +58,24 @@ while want_to_play == 'Y'
     while flag.zero?
       print "\nPlayer 1 make your move = "
       p1_move = gets.chomp
-      flag = 1 if [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(p1_move.to_i)
-      puts "\nThat was an Invalid Move. Input move again\n" if flag.zero?
-      #  CHeck if chosen move is empty
-      #  if empty set flag=1 puts "Invalid move"
-      #  else flag =0
+      if [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(p1_move.to_i)
+        if !p1_arr.include?(p1_move.to_i) && !p2_arr.include?(p1_move.to_i)
+          flag = 1
+        else
+          puts "\nThat move is not available\n"
+        end
+      else
+      puts "\nThat was an Invalid Move. Input move again\n"
+      end
     end
 
+    p1_arr.push(p1_move.to_i)
+
     (1..9).each do |i|
-      if i == p1_move.to_i
-        print ' X '
+      if p1_arr.include?(i)
+        print " #{p1_sym} "
+      elsif p2_arr.include?(i)
+        print " #{p2_sym} "
       else
         print " #{i} "
       end
@@ -82,16 +92,24 @@ while want_to_play == 'Y'
     while flag.zero?
       print "\nPlayer 2 make your move = "
       p2_move = gets.chomp
-      flag = 1 if [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(p2_move.to_i)
-      puts "\nThat was an Invalid Move. Input move again\n" if flag.zero?
-
-      #  CHeck if chosen move is empty
-      #  if empty set flag=1
-      #  else flag =0
+      if [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(p2_move.to_i)
+        if !p2_arr.include?(p2_move.to_i) && !p1_arr.include?(p2_move.to_i)
+          flag = 1
+        else
+          puts "\nThat move is not available\n"
+        end
+      else
+      puts "\nThat was an Invalid Move. Input move again\n"
+      end
     end
+
+    p2_arr.push(p2_move.to_i)
+
     (1..9).each do |i|
-      if i == p2_move.to_i
-        print ' O '
+      if p1_arr.include?(i)
+        print " #{p1_sym} "
+      elsif p2_arr.include?(i)
+        print " #{p2_sym} "
       else
         print " #{i} "
       end
