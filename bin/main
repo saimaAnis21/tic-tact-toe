@@ -1,19 +1,67 @@
 #!/usr/bin/env ruby
 # rubocop:disable Metrics/BlockNesting
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/PerceivedComplexity
+
+def board(sym1, sym2, arr1, arr2)
+  (1..9).each do |i|
+    if arr1.include?(i)
+      print " #{sym1} "
+    elsif arr2.include?(i)
+      print " #{sym2} "
+    else
+      print " #{i} "
+    end
+    print '|' unless (i % 3).zero?
+    puts "\n" if (i % 3).zero?
+  end
+end
+
+def validmove(move, arr1, arr2)
+  return false unless [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(move)
+  return false unless !arr1.include?(move) && !arr2.include?(move)
+
+  true
+end
+
+def checkwin(move, arr)
+  if move != 6 && move != 8
+    return true if arr.include?(1) && arr.include?(4) && arr.include?(7)
+
+    return true if arr.include?(1) && arr.include?(5) && arr.include?(9)
+
+    return true if arr.include?(1) && arr.include?(2) && arr.include?(3)
+
+    return true if arr.include?(3) && arr.include?(5) && arr.include?(7)
+
+  end
+
+  if move != 2 && move != 4
+    return true if arr.include?(9) && arr.include?(8) && arr.include?(7)
+
+    return true if arr.include?(9) && arr.include?(6) && arr.include?(3)
+
+  end
+
+  if move != 1 && move != 3 && move != 7 && move != 9
+    return true if arr.include?(2) && arr.include?(8) && arr.include?(5)
+
+    return true if arr.include?(4) && arr.include?(6) && arr.include?(5)
+
+  end
+  false
+end
+
 instructions = "1.The game is played on a 3x3 grid.\n
 2. One player is X, the other is O.\n
 3. Player take turns to input a no. between (1-9) to mark one of the empty squares.\n
 4. The first player to get 3 marks in a row (up, down, across, or diagonally) is the winner.\n
 5. If none of the players win and all 9 squares are filled the game is a draw"
 
-# p1_sym = ''
-# p1_move = ''
-# p2_move = ''
 p1_arr = []
 p2_arr = []
 game_ctr = 0
-win = 0
-# winner=0
+
 puts "xoxoxoxoxoxo Welcome to the Game of Tic-Tact-Toe  xoxoxoxoxoxo\n\n"
 puts "               Game Instructions\n\n"
 puts instructions + "\n\n"
@@ -40,7 +88,9 @@ print "\nWant to play the game (y/n)? = "
 want_to_play = gets.chomp.capitalize
 
 while want_to_play == 'Y'
-
+  p1_arr = []
+  p2_arr = []
+  game_ctr = 0
   flag = 0
   while flag.zero?
     print "\nPlayer 1 choose your symbol (O / X) = "
@@ -52,58 +102,41 @@ while want_to_play == 'Y'
   p2_sym = p1_sym == 'X' ? 'O' : 'X'
   puts "\nPlayer 2 your symbol is = " + p2_sym
 
-  while game_ctr < 9 && win.zero?
+  while game_ctr < 5
 
     flag = 0
     while flag.zero?
       print "\nPlayer 1 make your move = "
       p1_move = gets.chomp
-      if [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(p1_move.to_i)
-        if !p1_arr.include?(p1_move.to_i) && !p2_arr.include?(p1_move.to_i)
-          flag = 1
-        else
-          puts "\nThat move is not available\n"
-        end
+
+      if validmove(p1_move.to_i, p1_arr, p2_arr)
+        flag = 1
       else
         puts "\nThat was an Invalid Move. Input move again\n"
       end
+
     end
 
     p1_arr.push(p1_move.to_i)
 
-    (1..9).each do |i|
-      if p1_arr.include?(i)
-        print " #{p1_sym} "
-      elsif p2_arr.include?(i)
-        print " #{p2_sym} "
-      else
-        print " #{i} "
-      end
-      print '|' unless (i % 3).zero?
-      puts "\n" if (i % 3).zero?
+    board(p1_sym, p2_sym, p1_arr, p2_arr)
+
+    if checkwin(p1_move.to_i, p1_arr)
+      puts "\nPlayer1 CONGRATULATIONS!!! you are the WINNER\n"
+      break
     end
 
     if game_ctr == 4
-      puts 'The game is a draw and no one wins'
+      puts "\nThe game is a draw and no one wins\n"
       break
     end
-    # check if player1 has made a winnign move
-    # if winning move set win=1 and winner=1
-    # puts "That was a winning move. COngratulations"
-    # else win=0
-
-    # execute following loop only if win==0
 
     flag = 0
     while flag.zero?
       print "\nPlayer 2 make your move = "
       p2_move = gets.chomp
-      if [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(p2_move.to_i)
-        if !p2_arr.include?(p2_move.to_i) && !p1_arr.include?(p2_move.to_i)
-          flag = 1
-        else
-          puts "\nThat move is not available\n"
-        end
+      if validmove(p2_move.to_i, p1_arr, p2_arr)
+        flag = 1
       else
         puts "\nThat was an Invalid Move. Input move again\n"
       end
@@ -111,21 +144,13 @@ while want_to_play == 'Y'
 
     p2_arr.push(p2_move.to_i)
 
-    (1..9).each do |i|
-      if p1_arr.include?(i)
-        print " #{p1_sym} "
-      elsif p2_arr.include?(i)
-        print " #{p2_sym} "
-      else
-        print " #{i} "
-      end
-      print '|' unless (i % 3).zero?
-      puts "\n" if (i % 3).zero?
+    board(p1_sym, p2_sym, p1_arr, p2_arr)
+
+    if checkwin(p2_move.to_i, p2_arr)
+      puts "\nPlayer2 CONGRATULATIONS!!! you are the WINNER\n"
+      break
     end
-    # check if player2 has made a winnign move
-    # if winning move set win=1 and winner=2
-    # puts "That was a winning move. COngratulations"
-    # else win=0
+
     game_ctr += 1
 
   end
@@ -134,14 +159,8 @@ while want_to_play == 'Y'
 
 end
 
-# if winner==1
-#   puts "Congratulations Player 1 "
-# elsif winner==2
-#   puts "Congratulations Player 2 "
-# elsif winner==0
-#   puts "its a draw"
-# end
-
 puts "\n \nThank you for playing the Game"
 
 # rubocop:enable Metrics/BlockNesting
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
