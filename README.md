@@ -14,9 +14,8 @@ A 3x3 grid game for 2 players
 - Enter your name and symbol
 - Game will ask for moves alternately between the 2 players
 - The player to score first 3 marks in a row (up, down, across, or diagonally) will be declared as the winner
-![win](ttt-win.jpg)
 - If none of the players score a win, the game will end in a tie/draw.
-![tie](ttt-draw.jpg)
+![win](ttt-win.jpg) ![tie](ttt-draw.jpg)
 
 ## Game Instructions
 1. The game is played on a 3x3 grid.
