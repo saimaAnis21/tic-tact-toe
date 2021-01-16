@@ -2,20 +2,35 @@
 # rubocop:disable Metrics/BlockNesting
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/PerceivedComplexity
-
-def board(sym1, sym2, arr1, arr2)
-  (1..9).each do |i|
-    if arr1.include?(i)
-      print " #{sym1} "
-    elsif arr2.include?(i)
-      print " #{sym2} "
-    else
-      print " #{i} "
+class Board
+  def print_board(sym1, sym2, arr1, arr2)
+    (1..9).each do |i|
+      if arr1.include?(i)
+        print " #{sym1} "
+      elsif arr2.include?(i)
+        print " #{sym2} "
+      else
+        print " #{i} "
+      end
+      print '|' unless (i % 3).zero?
+      puts "\n" if (i % 3).zero?
     end
-    print '|' unless (i % 3).zero?
-    puts "\n" if (i % 3).zero?
   end
 end
+
+# def board(sym1, sym2, arr1, arr2)
+#   (1..9).each do |i|
+#     if arr1.include?(i)
+#       print " #{sym1} "
+#     elsif arr2.include?(i)
+#       print " #{sym2} "
+#     else
+#       print " #{i} "
+#     end
+#     print '|' unless (i % 3).zero?
+#     puts "\n" if (i % 3).zero?
+#   end
+# end
 
 def validmove(move, arr1, arr2)
   return false unless [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(move)
@@ -61,6 +76,9 @@ instructions = "1.The game is played on a 3x3 grid.\n
 p1_arr = []
 p2_arr = []
 game_ctr = 0
+brd = Board.new
+
+
 
 puts "xoxoxoxoxoxo Welcome to the Game of Tic-Tact-Toe  xoxoxoxoxoxo\n\n"
 puts "               Game Instructions\n\n"
@@ -119,7 +137,8 @@ while want_to_play == 'Y'
 
     p1_arr.push(p1_move.to_i)
 
-    board(p1_sym, p2_sym, p1_arr, p2_arr)
+    
+    brd.print_board(p1_sym, p2_sym, p1_arr, p2_arr)
 
     if checkwin(p1_move.to_i, p1_arr)
       puts "\nPlayer1 CONGRATULATIONS!!! you are the WINNER\n"
@@ -144,7 +163,8 @@ while want_to_play == 'Y'
 
     p2_arr.push(p2_move.to_i)
 
-    board(p1_sym, p2_sym, p1_arr, p2_arr)
+    
+    brd.print_board(p1_sym, p2_sym, p1_arr, p2_arr)
 
     if checkwin(p2_move.to_i, p2_arr)
       puts "\nPlayer2 CONGRATULATIONS!!! you are the WINNER\n"
