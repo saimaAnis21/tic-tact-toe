@@ -1,10 +1,8 @@
 #!/usr/bin/env ruby
 # rubocop:disable Metrics/BlockNesting
-# rubocop:disable Metrics/CyclomaticComplexity
-# rubocop:disable Metrics/PerceivedComplexity
-require './lib/Board.rb'
-require './lib/Game.rb'
-require './lib/Player.rb'
+require './lib/board_game.rb'
+require './lib/game_logic.rb'
+require './lib/player_info.rb'
 
 instructions = "1.The game is played on a 3x3 grid.\n
 2. One player is X, the other is O.\n
@@ -22,14 +20,13 @@ puts "               Game Instructions\n\n"
 puts instructions + "\n\n"
 
 puts "\n3x3 Grid\n"
-Board.print_board('','',[],[])
+Board.print_board('', '', [], [])
 
 puts "\nWhat the grid may look like when there is a winner\n"
-Board.print_board('X','',[1,2,3],[])
+Board.print_board('X', '', [1, 2, 3], [])
 
 puts "\nWhat the grid may look like when there is a draw\n"
-Board.print_board('X','O',[1,3,5,8],[2,4,6,7,9])
-
+Board.print_board('X', 'O', [1, 3, 5, 8], [2, 4, 6, 7, 9])
 
 print "\nWant to play the game (y/n)? = "
 want_to_play = gets.chomp.capitalize
@@ -50,7 +47,7 @@ while want_to_play == 'Y'
     flag = 1 if %w[O X].include?(p1.symbol)
     puts "\nInvalid symbol. Choose again\n" if flag.zero?
   end
-  
+
   print "\nPlayer 2 write your name = "
   p2.name = gets.chomp.to_s
 
@@ -60,9 +57,9 @@ while want_to_play == 'Y'
   while game_ctr < 5
     flag = 0
     while flag.zero?
-      print "\n#{p1.name} make your move = "
+      print "\n#{p1.name}-#{p1.symbol} make your move = "
       p1_move = gets.chomp
-      
+
       if Game.validmove(p1_move.to_i, p1.moves, p2.moves)
         flag = 1
       else
@@ -73,7 +70,6 @@ while want_to_play == 'Y'
 
     p1.moves.push(p1_move.to_i)
 
-    
     Board.print_board(p1.symbol, p2.symbol, p1.moves, p2.moves)
 
     if Game.checkwin(p1_move.to_i, p1.moves)
@@ -88,7 +84,7 @@ while want_to_play == 'Y'
 
     flag = 0
     while flag.zero?
-      print "\n#{p2.name} make your move = "
+      print "\n#{p2.name}-#{p2.symbol} make your move = "
       p2_move = gets.chomp
       if Game.validmove(p2_move.to_i, p1.moves, p2.moves)
         flag = 1
@@ -99,7 +95,6 @@ while want_to_play == 'Y'
 
     p2.moves.push(p2_move.to_i)
 
-    
     Board.print_board(p1.symbol, p2.symbol, p1.moves, p2.moves)
 
     if Game.checkwin(p2_move.to_i, p2.moves)
@@ -118,5 +113,3 @@ end
 puts "\n \nThank you for playing the Game"
 
 # rubocop:enable Metrics/BlockNesting
-# rubocop:enable Metrics/CyclomaticComplexity
-# rubocop:enable Metrics/PerceivedComplexity
