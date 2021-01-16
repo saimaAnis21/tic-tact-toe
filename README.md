@@ -10,6 +10,8 @@ A 3x3 grid game for 2 players
 
 ## Getting Started
 
+- Clone the game repository to your local machine by using (git clone https://github.com/saimaAnis21/tic-tact-toe.git)
+- cd into the bin directory of the game folder on your local machine
 - run the game by typing "main" on the Command Line
 - Enter your name and symbol
 - Game will ask for moves alternately between the 2 players
