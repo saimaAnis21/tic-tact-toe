@@ -1,4 +1,4 @@
-require 'player_info'
+require_relative '../lib/player_info'
 
 describe Player do
   subject(:plyr) { Player.new }
