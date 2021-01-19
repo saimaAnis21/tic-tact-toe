@@ -1,8 +1,9 @@
 # rubocop:disable Metrics/CyclomaticComplexity
-# rubocetop:disable Mrics/PerceivedComplexity
+# rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/PerceivedComplexity
 class Game
   def self.validmove(move, arr1, arr2)
-    return false unless [1,2, 3, 4, 5, 6, 7, 8, 9].include?(move)
+    return false unless [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(move)
     return false unless !arr1.include?(move) && !arr2.include?(move)
 
     true
@@ -37,4 +38,5 @@ class Game
   end
 end
 # rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
 # rubocop:enable Metrics/PerceivedComplexity

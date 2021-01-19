@@ -2,7 +2,6 @@ require 'game_logic'
 
 describe Game do
   describe '::validmove' do
-
     it 'should accept 2 arrays and an integer' do
       expect { Game.validmove(2, [1, 2, 3], [4, 5, 6]) }.to_not raise_error
     end
@@ -25,7 +24,6 @@ describe Game do
   end
 
   describe '::checkwin' do
-
     it 'should accept 1 array and an integer' do
       expect { Game.checkwin(2, [1, 2, 3]) }.to_not raise_error
     end
