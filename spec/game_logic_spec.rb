@@ -35,6 +35,5 @@ describe Game do
     it 'Check it returns false if the player has no winning move' do
       expect(Game.checkwin(2, [5, 2, 3])).to be_falsy
     end
-
   end
 end
