@@ -1,4 +1,4 @@
-require 'game_logic'
+require_relative '../lib/game_logic'
 
 describe Game do
   describe '::validmove' do
