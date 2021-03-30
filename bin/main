@@ -1,2 +1,132 @@
 #!/usr/bin/env ruby
-puts "Hello World to Saimaaa"
+
+# rubocop:disable Metrics/ParameterLists
+# rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/MethodLength
+# rubocop:disable Metrics/CyclomaticComplexity
+
+require_relative '../lib/game_logic.rb'
+require_relative '../lib/player_info.rb'
+
+def print_board(sym1 = nil, sym2 = nil, arr1 = nil, arr2 = nil)
+  (1..9).each do |i|
+    if arr1.include?(i)
+      print " #{sym1} "
+    elsif arr2.include?(i)
+      print " #{sym2} "
+    else
+      print " #{i} "
+    end
+    print '|' unless (i % 3).zero?
+    puts "\n" if (i % 3).zero?
+  end
+end
+
+def prompt_player(name, symbol1, symbol2, arr1, arr2, player)
+  flag = 0
+  while flag.zero?
+
+    sym = symbol1 if player == 1
+    sym = symbol2 if player == 2
+
+    print "\n#{name}-#{sym} make your move = "
+    p_move = gets.chomp
+
+    if Game.validmove(p_move.to_i, arr1, arr2)
+      arr1.push(p_move.to_i) if player == 1
+      arr2.push(p_move.to_i) if player == 2
+      flag = 1
+    else
+      puts "\nThat was an Invalid Move. Input move again\n"
+    end
+
+  end
+
+  print_board(symbol1, symbol2, arr1, arr2)
+
+  arr = arr1 if player == 1
+  arr = arr2 if player == 2
+
+  if Game.checkwin(p_move.to_i, arr)
+    puts "\n#{name} CONGRATULATIONS!!! you are the WINNER\n"
+    true
+  else
+    false
+  end
+end
+
+instructions = "1.The game is played on a 3x3 grid.\n
+2. One player is X, the other is O.\n
+3. Player take turns to input a no. between (1-9) to mark one of the empty squares.\n
+4. The first player to get 3 marks in a row (up, down, across, or diagonally) is the winner.\n
+5. If none of the players win and all 9 squares are filled the game is a draw"
+
+game_ctr = 0
+p1 = Player.new
+p2 = Player.new
+
+puts "xoxoxoxoxoxo Welcome to the Game of Tic-Tact-Toe  xoxoxoxoxoxo\n\n"
+puts "               Game Instructions\n\n"
+
+puts instructions + "\n\n"
+
+puts "\n3x3 Grid\n"
+print_board('', '', [], [])
+
+puts "\nWhat the grid may look like when there is a winner\n"
+print_board('X', '', [1, 2, 3], [])
+
+puts "\nWhat the grid may look like when there is a draw\n"
+print_board('X', 'O', [1, 3, 5, 8], [2, 4, 6, 7, 9])
+
+print "\nWant to play the game (y/n)? = "
+want_to_play = gets.chomp.capitalize
+
+while want_to_play == 'Y'
+
+  p1.moves = []
+  p2.moves = []
+  game_ctr = 0
+  flag = 0
+
+  print "\nPlayer 1 write your name = "
+  p1.name = gets.chomp.to_s
+
+  while flag.zero?
+    print "\n#{p1.name} choose your symbol (O / X) = "
+    p1.symbol = gets.chomp.capitalize
+    flag = 1 if %w[O X].include?(p1.symbol)
+    puts "\nInvalid symbol. Choose again\n" if flag.zero?
+  end
+
+  print "\nPlayer 2 write your name = "
+  p2.name = gets.chomp.to_s
+
+  p2.symbol = p1.symbol == 'X' ? 'O' : 'X'
+  puts "\n#{p2.name} your symbol is = " + p2.symbol
+
+  while game_ctr < 5
+
+    break if prompt_player(p1.name, p1.symbol, p2.symbol, p1.moves, p2.moves, 1)
+
+    if game_ctr == 4
+      puts "\nThe game is a draw and no one wins\n"
+      break
+    end
+
+    break if prompt_player(p1.name, p1.symbol, p2.symbol, p1.moves, p2.moves, 2)
+
+    game_ctr += 1
+
+  end
+  print "\nWant to play again (y/n)? = "
+  want_to_play = gets.chomp.capitalize
+
+end
+
+puts "\n \nThank you for playing the Game"
+
+# rubocop:enable Metrics/ParameterLists
+# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/MethodLength
+# rubocop:enable Metrics/CyclomaticComplexity
